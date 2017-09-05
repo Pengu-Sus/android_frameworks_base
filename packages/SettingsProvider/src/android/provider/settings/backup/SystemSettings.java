@@ -106,7 +106,9 @@ public class SystemSettings {
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.NOTIFICATION_VIBRATION_PATTERN,
         Settings.System.QS_SHOW_BATTERY_ESTIMATE,
-        Settings.System.HAPTIC_ON_SLIDER,
         Settings.System.LOCKSCREEN_BATTERY_INFO,
+        Settings.System.VIBRATE_ON_CONNECT,
+        Settings.System.VIBRATE_ON_CALLWAITING,
+        Settings.System.VIBRATE_ON_DISCONNECT,
     };
 }
