@@ -560,7 +560,7 @@ constructor(
             updateBatteryMode()
         }
         setNetworkTrafficVisible(qsExpandedFraction == 1f && !privacyChipVisible)
-        setBatteryClickable(qsExpandedFraction == 1f || !privacyChipVisible)
+        setBatteryClickable(qsExpandedFraction == 1f || !visible)
     }
 
     private fun logInstantEvent(message: String) {
