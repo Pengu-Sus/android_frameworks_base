@@ -100,6 +100,8 @@ import android.widget.Editor;
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
 
+import com.android.internal.util.penguin.HideDeveloperStatusUtils;
+
 import java.io.IOException;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -4067,6 +4069,9 @@ public final class Settings {
         /** @hide */
         @UnsupportedAppUsage
         public static int getIntForUser(ContentResolver cr, String name, int def, int userHandle) {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getStringForUser(cr, name, userHandle);
             return parseIntSettingWithDefault(v, def);
         }
@@ -4098,6 +4103,9 @@ public final class Settings {
         @UnsupportedAppUsage
         public static int getIntForUser(ContentResolver cr, String name, int userHandle)
                 throws SettingNotFoundException {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getStringForUser(cr, name, userHandle);
             return parseIntSetting(v, name);
         }
@@ -7091,6 +7099,9 @@ public final class Settings {
         /** @hide */
         @UnsupportedAppUsage
         public static int getIntForUser(ContentResolver cr, String name, int def, int userHandle) {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getStringForUser(cr, name, userHandle);
             return parseIntSettingWithDefault(v, def);
         }
@@ -7121,6 +7132,9 @@ public final class Settings {
         /** @hide */
         public static int getIntForUser(ContentResolver cr, String name, int userHandle)
                 throws SettingNotFoundException {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getStringForUser(cr, name, userHandle);
             return parseIntSetting(v, name);
         }
@@ -11974,6 +11988,13 @@ public final class Settings {
          * @hide
          */
         public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
+
+        /**
+         * Control whether to hide ADB and Developer settings enable status.
+         * @hide
+         */
+        @Readable
+        public static final String HIDE_DEVELOPER_STATUS = "hide_developer_status";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -17707,6 +17728,9 @@ public final class Settings {
          * or not a valid integer.
          */
         public static int getInt(ContentResolver cr, String name, int def) {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getString(cr, name);
             return parseIntSettingWithDefault(v, def);
         }
@@ -17731,6 +17755,9 @@ public final class Settings {
          */
         public static int getInt(ContentResolver cr, String name)
                 throws SettingNotFoundException {
+            if (HideDeveloperStatusUtils.shouldHideDevStatus(cr, cr.getPackageName(), name)) {
+                return 0 /* Disabled */;
+            }
             String v = getString(cr, name);
             return parseIntSetting(v, name);
         }
