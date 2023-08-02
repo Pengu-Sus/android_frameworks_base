@@ -193,7 +193,8 @@ public abstract class WMShellModule {
             SyncTransactionQueue syncQueue,
             Transitions transitions,
             Optional<DesktopModeController> desktopModeController,
-            Optional<DesktopTasksController> desktopTasksController) {
+            Optional<DesktopTasksController> desktopTasksController,
+            RootTaskDisplayAreaOrganizer rootTaskDisplayAreaOrganizer) {
         if (DesktopModeStatus.isAnyEnabled()) {
             return new DesktopModeWindowDecorViewModel(
                     context,
@@ -206,7 +207,8 @@ public abstract class WMShellModule {
                     syncQueue,
                     transitions,
                     desktopModeController,
-                    desktopTasksController);
+                    desktopTasksController,
+                    rootTaskDisplayAreaOrganizer);
         }
         return new CaptionWindowDecorViewModel(
                 context,

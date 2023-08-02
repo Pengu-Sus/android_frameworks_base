@@ -502,6 +502,55 @@ class DesktopTasksController(
         }
     }
 
+    /**
+     * Quick-resize to the right or left half of the stable bounds.
+     *
+     * @param position the portion of the screen (RIGHT or LEFT) we want to snap the task to.
+     */
+    fun snapToHalfScreen(
+            taskInfo: RunningTaskInfo,
+            windowDecor: DesktopModeWindowDecoration,
+            position: SnapPosition
+    ) {
+        val displayLayout = displayController.getDisplayLayout(taskInfo.displayId) ?: return
+
+        val stableBounds = Rect()
+        displayLayout.getStableBounds(stableBounds)
+
+        val destinationWidth = stableBounds.width() / 2
+        val destinationBounds = when (position) {
+            SnapPosition.LEFT -> {
+                Rect(
+                        stableBounds.left,
+                        stableBounds.top,
+                        stableBounds.left + destinationWidth,
+                        stableBounds.bottom
+                )
+            }
+            SnapPosition.RIGHT -> {
+                Rect(
+                        stableBounds.right - destinationWidth,
+                        stableBounds.top,
+                        stableBounds.right,
+                        stableBounds.bottom
+                )
+            }
+        }
+
+        if (destinationBounds == taskInfo.configuration.windowConfiguration.bounds) return
+
+        val wct = WindowContainerTransaction().setBounds(taskInfo.token, destinationBounds)
+        if (Transitions.ENABLE_SHELL_TRANSITIONS) {
+            toggleResizeDesktopTaskTransitionHandler.startTransition(
+                    wct,
+                    taskInfo.taskId,
+                    windowDecor
+            )
+        } else {
+            shellTaskOrganizer.applyTransaction(wct)
+        }
+    }
+
     private fun getDefaultDesktopTaskBounds(density: Float, stableBounds: Rect, outBounds: Rect) {
         val width = (DESKTOP_MODE_DEFAULT_WIDTH_DP * density + 0.5f).toInt()
         val height = (DESKTOP_MODE_DEFAULT_HEIGHT_DP * density + 0.5f).toInt()
@@ -1126,4 +1175,7 @@ class DesktopTasksController(
             return DESKTOP_DENSITY_OVERRIDE in DESKTOP_DENSITY_ALLOWED_RANGE
         }
     }
+
+    /** The positions on a screen that a task can snap to. */
+    enum class SnapPosition { RIGHT, LEFT }
 }
