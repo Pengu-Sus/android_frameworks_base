@@ -43,7 +43,6 @@ import android.window.WindowContainerTransaction;
 
 import com.android.internal.protolog.common.ProtoLog;
 import com.android.wm.shell.common.split.SplitScreenUtils;
-import com.android.wm.shell.desktopmode.DesktopModeController;
 import com.android.wm.shell.desktopmode.DesktopModeStatus;
 import com.android.wm.shell.desktopmode.DesktopTasksController;
 import com.android.wm.shell.keyguard.KeyguardTransitionHandler;
@@ -72,7 +71,6 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
     private RecentsTransitionHandler mRecentsHandler;
     private StageCoordinator mSplitHandler;
     private final KeyguardTransitionHandler mKeyguardHandler;
-    private DesktopModeController mDesktopModeController;
     private DesktopTasksController mDesktopTasksController;
     private UnfoldTransitionHandler mUnfoldHandler;
 
@@ -150,7 +148,6 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
             @Nullable PipTransitionController pipTransitionController,
             Optional<RecentsTransitionHandler> recentsHandlerOptional,
             KeyguardTransitionHandler keyguardHandler,
-            Optional<DesktopModeController> desktopModeControllerOptional,
             Optional<DesktopTasksController> desktopTasksControllerOptional,
             Optional<UnfoldTransitionHandler> unfoldHandler) {
         mPlayer = player;
@@ -170,7 +167,6 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
                 if (mRecentsHandler != null) {
                     mRecentsHandler.addMixer(this);
                 }
-                mDesktopModeController = desktopModeControllerOptional.orElse(null);
                 mDesktopTasksController = desktopTasksControllerOptional.orElse(null);
                 mUnfoldHandler = unfoldHandler.orElse(null);
             }, this);
@@ -257,7 +253,7 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
     @Override
     public Transitions.TransitionHandler handleRecentsRequest(WindowContainerTransaction outWCT) {
         if (mRecentsHandler != null && (mSplitHandler.isSplitScreenVisible()
-                || DesktopModeStatus.isActive(mPlayer.getContext()))) {
+                || DesktopModeStatus.isEnabled())) {
             return this;
         }
         return null;
@@ -272,7 +268,7 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
                     MixedTransition.TYPE_RECENTS_DURING_SPLIT, transition);
             mixed.mLeftoversHandler = mRecentsHandler;
             mActiveTransitions.add(mixed);
-        } else if (DesktopModeStatus.isActive(mPlayer.getContext())) {
+        } else if (DesktopModeStatus.isEnabled()) {
             ProtoLog.v(ShellProtoLogGroup.WM_SHELL_TRANSITIONS, " Got a recents request while "
                     + "desktop mode is active, so treat it as Mixed.");
             final MixedTransition mixed = new MixedTransition(
@@ -717,11 +713,6 @@ public class DefaultMixedHandler implements Transitions.TransitionHandler,
                 mixed.mTransition, info, startTransaction, finishTransaction, finishCallback);
         if (!consumed) {
             return false;
-        }
-        //Sync desktop mode state (proto 1)
-        if (mDesktopModeController != null) {
-            mDesktopModeController.syncSurfaceState(info, finishTransaction);
-            return true;
         }
         //Sync desktop mode state (proto 2)
         if (mDesktopTasksController != null) {
