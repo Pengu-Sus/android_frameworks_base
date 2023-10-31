@@ -368,6 +368,11 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
         }
 
         @Override
+        public void animateNavBarLongPress(boolean isTouchDown, long durationMs) {
+            mView.getHomeHandle().animateLongPress(isTouchDown, durationMs);
+        }
+
+        @Override
         public void onHomeRotationEnabled(boolean enabled) {
             mView.getRotationButtonController().setHomeRotationEnabled(enabled);
         }
