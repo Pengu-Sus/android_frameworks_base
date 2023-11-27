@@ -442,8 +442,4 @@ cc_library_shared {
             ],
         },
     },
-
-    lto: {
-        thin: true,
-    },
 }
