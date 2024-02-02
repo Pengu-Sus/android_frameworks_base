@@ -63,7 +63,7 @@ import com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_DESKTOP_MODE
 import com.android.wm.shell.recents.RecentsTransitionHandler
 import com.android.wm.shell.recents.RecentsTransitionStateListener
 import com.android.wm.shell.splitscreen.SplitScreenController
-import com.android.wm.shell.splitscreen.SplitScreenController.EXIT_REASON_ENTER_DESKTOP
+import com.android.wm.shell.splitscreen.SplitScreenController.EXIT_REASON_DESKTOP_MODE
 import com.android.wm.shell.sysui.ShellCommandHandler
 import com.android.wm.shell.sysui.ShellController
 import com.android.wm.shell.sysui.ShellInit
@@ -353,7 +353,7 @@ class DesktopTasksController(
     private fun exitSplitIfApplicable(wct: WindowContainerTransaction, taskInfo: RunningTaskInfo) {
         if (taskInfo.windowingMode == WINDOWING_MODE_MULTI_WINDOW) {
             splitScreenController.prepareExitSplitScreen(wct,
-                splitScreenController.getStageOfTask(taskInfo.taskId), EXIT_REASON_ENTER_DESKTOP)
+                splitScreenController.getStageOfTask(taskInfo.taskId), EXIT_REASON_DESKTOP_MODE)
         }
     }
 
