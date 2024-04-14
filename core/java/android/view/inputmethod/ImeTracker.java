@@ -499,7 +499,7 @@ public interface ImeTracker {
             if (token == null) return;
             IInputMethodManagerGlobalInvoker.onCancelled(token, phase);
 
-            Log.i(TAG, token.mTag + ": onCancelled at " + Debug.phaseToString(phase));
+            //Log.i(TAG, token.mTag + ": onCancelled at " + Debug.phaseToString(phase));
         }
 
         @Override
