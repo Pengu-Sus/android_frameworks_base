@@ -1157,7 +1157,6 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         boolean hasParticipatedDisplay = false;
         boolean hasVisibleTransientLaunch = false;
         boolean enterAutoPip = false;
-        boolean committedSomeInvisible = false;
         // Commit all going-invisible containers
         for (int i = 0; i < mParticipants.size(); ++i) {
             final WindowContainer<?> participant = mParticipants.valueAt(i);
@@ -1212,7 +1211,7 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
                         }
                         ar.commitVisibility(false /* visible */, false /* performLayout */,
                                 true /* fromTransition */);
-                        committedSomeInvisible = true;
+                        mController.onCommittedInvisibles(ar);
                     } else {
                         enterAutoPip = true;
                     }
@@ -1274,9 +1273,6 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
                         "  Commit wallpaper becoming invisible: %s", wt);
                 wt.commitVisibility(false /* visible */);
             }
-        }
-        if (committedSomeInvisible) {
-            mController.onCommittedInvisibles();
         }
 
         if (hasVisibleTransientLaunch) {
