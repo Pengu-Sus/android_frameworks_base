@@ -115,7 +115,7 @@ class AppOpService(
         val appId = UserHandle.getAppId(uid)
         val userId = UserHandle.getUserId(uid)
         val opName = AppOpsManager.opToPublicName(op)
-        var wasChanged = false
+        var wasChanged: Boolean
         service.mutateState {
             wasChanged = with(uidPolicy) { setAppOpMode(appId, userId, opName, mode) }
         }
@@ -151,7 +151,7 @@ class AppOpService(
     }
 
     override fun removePackage(packageName: String, userId: Int): Boolean {
-        var wasChanged = false
+        var wasChanged: Boolean
         service.mutateState {
             wasChanged = with (packagePolicy) { removeAppOpModes(packageName, userId) }
         }
