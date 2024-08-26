@@ -445,7 +445,8 @@ constructor(
             object : StatusBarStateController.StateListener {
                 override fun onStatePreChange(oldState: Int, newState: Int) {
                     // We're updating the location before the state change happens, since we want
-                    // the location of the previous state to still be up to date when the animation
+                    // the
+                    // location of the previous state to still be up to date when the animation
                     // starts
                     statusbarState = newState
                     updateDesiredLocation()
@@ -541,15 +542,6 @@ constructor(
                 }
             }
         )
-
-        coroutineScope.launch {
-            shadeInteractor.shadeExpansion.collect { expansion ->
-                if (expansion >= 1f || expansion <= 0f) {
-                    // Shade has fully expanded or collapsed: force transition amount update
-                    setTransitionToFullShadeAmount(expansion)
-                }
-            }
-        }
 
         val settingsObserver: ContentObserver =
             object : ContentObserver(handler) {
