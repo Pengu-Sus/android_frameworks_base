@@ -6102,6 +6102,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_REFRESH_INTERVAL = "network_traffic_refresh_interval";
 
         /**
+         * Whether to disable qs on secure lockscreen.
+         * @hide
+         */
+        public static final String SECURE_LOCKSCREEN_QS_DISABLED = "secure_lockscreen_qs_disabled";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
