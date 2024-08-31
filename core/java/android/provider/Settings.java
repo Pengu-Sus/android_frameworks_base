@@ -6149,6 +6149,13 @@ public final class Settings {
         public static final String GAMESPACE_SUPPRESS_FULLSCREEN_INTENT = "gamespace_suppress_fullscreen_intent";
 
         /**
+         * Whether long press on navbar gesture is enabled
+         * @hide
+         */
+        @Readable
+        public static final String NAVBAR_LONG_PRESS_GESTURE = "navbar_long_press_gesture";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
