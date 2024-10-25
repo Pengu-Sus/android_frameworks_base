@@ -6127,7 +6127,7 @@ public final class Settings {
          */
         public static final String SECURE_LOCKSCREEN_QS_DISABLED = "secure_lockscreen_qs_disabled";
 
-        /** 
+        /**
          * Whether to show the battery info on the lockscreen while charging
          * @hide
          */
@@ -6358,6 +6358,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
+            PRIVATE_SETTINGS.add(SENSOR_BLOCK);
         }
 
         /**
