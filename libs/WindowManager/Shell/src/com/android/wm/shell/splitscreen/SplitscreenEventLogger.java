@@ -25,7 +25,6 @@ import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED_
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__DEVICE_FOLDED;
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__DRAG_DIVIDER;
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__FULLSCREEN_SHORTCUT;
-import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__DESKTOP_MODE;
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__RECREATE_SPLIT;
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__RETURN_HOME;
 import static com.android.internal.util.FrameworkStatsLog.SPLITSCREEN_UICHANGED__EXIT_REASON__ROOT_TASK_VANISHED;
@@ -194,8 +193,6 @@ public class SplitscreenEventLogger {
                 return SPLITSCREEN_UICHANGED__EXIT_REASON__RECREATE_SPLIT;
             case EXIT_REASON_FULLSCREEN_SHORTCUT:
                 return SPLITSCREEN_UICHANGED__EXIT_REASON__FULLSCREEN_SHORTCUT;
-            case EXIT_REASON_DESKTOP_MODE:
-                return SPLITSCREEN_UICHANGED__EXIT_REASON__DESKTOP_MODE;
             case EXIT_REASON_UNKNOWN:
                 // Fall through
             default:
