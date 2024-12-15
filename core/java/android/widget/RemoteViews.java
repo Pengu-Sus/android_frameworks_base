@@ -7275,6 +7275,15 @@ public class RemoteViews implements Parcelable, Filter {
                         Math.max(mViewTypeCount, 1));
             }
         }
+
+        /**
+         * See {@link RemoteViews#visitUris(Consumer)}.
+         */
+        private void visitUris(@NonNull Consumer<Uri> visitor) {
+            for (RemoteViews view : mViews) {
+                view.visitUris(visitor);
+            }
+        }
     }
 
     /**
